@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use App\Models\Usersinfo;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +15,7 @@ class RegisterController extends Controller
         return view('registration');
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
         // Optional validation can be added later
 
@@ -27,7 +28,7 @@ class RegisterController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_type' => 'user', // or any default value you want
+            'user_type' => 'Customer', // or any default value you want
         ]);
 
         return redirect()->route('login')->with('success', 'Registration successful. Please login.');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
 use App\Models\Usersinfo;
 
@@ -14,7 +15,7 @@ class ProfileController extends Controller
         return view('edit-profile');
     }
 
-    public function update(Request $request)
+    public function update(UpdateProfileRequest $request)
     {
         $user = Usersinfo::find(session('user')->id);
 
@@ -23,13 +24,12 @@ class ProfileController extends Controller
             $user->last_name = $request->last_name;
             $user->username = $request->username;
             $user->save();
-
-            // Update the session with the new user info
+    
             session(['user' => $user]);
-
+    
             return back()->with('success', 'Profile updated successfully!');
         }
-
+    
         return back()->withErrors(['user' => 'User not found.']);
     }
 }
